@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9099743524571096372}
   - component: {fileID: 9099743524571096373}
   - component: {fileID: 9099743524571096374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Ghast
   m_TagString: Untagged
   m_Icon: {fileID: 0}

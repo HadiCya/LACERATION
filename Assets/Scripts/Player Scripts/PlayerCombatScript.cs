@@ -26,6 +26,8 @@ public class PlayerCombatScript : MonoBehaviour
     public string currentPower = "none";
 
     public Rigidbody2D rb;
+
+    public PlayerMovement playerMovement;
     
     // Start is called before the first frame update
     void Start()
@@ -207,7 +209,9 @@ public class PlayerCombatScript : MonoBehaviour
         }
         lastShot = Time.time;
 
-        rb.AddForce(transform.up * chargeForce, ForceMode2D.Impulse);
+        playerMovement.moveMode = false;
+        rb.AddForce(transform.right * chargeForce * -1, ForceMode2D.Impulse);
+        Invoke("setMoveMode", 1f);
     }
 
     void shield(bool active)
@@ -237,5 +241,10 @@ public class PlayerCombatScript : MonoBehaviour
 
         GameObject minionClone = Instantiate(minionObject, acidObject.transform.position, player.transform.rotation);
         minionObject.SetActive(true);
+    }
+
+    void setMoveMode()
+    {
+        playerMovement.moveMode = true;
     }
 }

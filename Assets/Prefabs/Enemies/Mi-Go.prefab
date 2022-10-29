@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2673125504460068823}
   - component: {fileID: 2673125504460068822}
   - component: {fileID: 2673125504460068821}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mi-Go
   m_TagString: Untagged
   m_Icon: {fileID: 0}

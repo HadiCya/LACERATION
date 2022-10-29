@@ -5,16 +5,20 @@ using UnityEngine;
 public class ShootPlayer : MonoBehaviour
 {
     public float speed;
-    public Transform target;
     public float minimumDistance;
+    public float shotDelay;
+
+    public Transform target;
 
     public GameObject projectile;
-    public float shotDelay;
+
     float shotTime;
 
     void Update(){
         if (Time.time > shotTime){
-            Instantiate(projectile, transform.position, Quaternion.identity);
+            GameObject projectileClone = Instantiate(projectile, projectile.transform.position, Quaternion.identity);
+            projectileClone.SetActive(true);
+
             shotTime = Time.time + shotDelay;
         }
 

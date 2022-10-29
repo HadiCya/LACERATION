@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
 
-    public string direction = "north";
-
     public Camera sceneCamera;
+
+    public bool moveMode = true;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         movement();
-        setDirection();
         mouseDirection();
     }
 
@@ -31,29 +30,9 @@ public class PlayerMovement : MonoBehaviour
         float hor = Input.GetAxisRaw("Horizontal");
         float ver = Input.GetAxisRaw("Vertical");
 
-        rb.velocity = new Vector2(hor * movementSpeed, ver * movementSpeed);
-    }
-
-    void setDirection()
-    {
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if(moveMode == true)
         {
-            direction = "north";
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            direction = "south";
-        }
-
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            direction = "west";
-        }
-
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            direction = "east";
+            rb.velocity = new Vector2(hor * movementSpeed, ver * movementSpeed);
         }
     }
 
