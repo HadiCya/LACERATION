@@ -32,7 +32,6 @@ public class PlayerMovement : MonoBehaviour
         float ver = Input.GetAxisRaw("Vertical");
 
         rb.velocity = new Vector2(hor * movementSpeed, ver * movementSpeed);
-        //transform.eulerAngles = new Vector3(0f, 0f, 0f);
     }
 
     void setDirection()

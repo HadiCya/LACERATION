@@ -5,17 +5,27 @@ using UnityEngine;
 public class PlayerCombatScript : MonoBehaviour
 {
     public int attackRange;
+    public int chargeForce;
+
     public double energy = 0;
+
+    public float cooldown;
+    public float lastShot;
 
     public GameObject player;
     public GameObject meleeAttackPoint;
     public GameObject dagger;
     public GameObject firebreathObject;
     public GameObject acidObject;
+    public GameObject shieldObject;
+    public GameObject decoyObject;
+    public GameObject minionObject;
 
     public LayerMask enemyLayers;
 
     public string currentPower = "none";
+
+    public Rigidbody2D rb;
     
     // Start is called before the first frame update
     void Start()
@@ -65,13 +75,51 @@ public class PlayerCombatScript : MonoBehaviour
                     acid();
                 }
             }
+
+            if (currentPower == "charge")
+            {
+                if (Input.GetKeyDown("q"))
+                {
+                    charge();
+                }
+            }
+
+            if (currentPower == "shield")
+            {
+                if (Input.GetKey("q"))
+                {
+                    shield(true);
+                    energy -= 0.05;
+                }
+
+                if (Input.GetKeyUp("q"))
+                {
+                    shield(false);
+                }
+            }
+
+            if (currentPower == "decoy")
+            {
+                if (Input.GetKeyDown("q"))
+                {
+                    decoy();
+                }
+            }
+
+            if (currentPower == "minion")
+            {
+                if (Input.GetKeyDown("q"))
+                {
+                    minion();
+                }
+            }
+
         }
         else
         {
             firebreath(false);
+            shield(false);
         }
-
-        
     }
 
     void meleeAttack()
@@ -108,6 +156,30 @@ public class PlayerCombatScript : MonoBehaviour
             currentPower = "acid";
             energy = 100;
         }
+
+        if (Input.GetKeyDown("3"))
+        {
+            currentPower = "charge";
+            energy = 100;
+        }
+
+        if (Input.GetKeyDown("4"))
+        {
+            currentPower = "shield";
+            energy = 100;
+        }
+
+        if (Input.GetKeyDown("5"))
+        {
+            currentPower = "decoy";
+            energy = 100;
+        }
+
+        if (Input.GetKeyDown("6"))
+        {
+            currentPower = "minion";
+            energy = 100;
+        }
     }
 
     void firebreath(bool active)
@@ -117,8 +189,53 @@ public class PlayerCombatScript : MonoBehaviour
 
     void acid()
     {
+        if (Time.time - lastShot < cooldown)
+        {
+            return;
+        }
+        lastShot = Time.time;
+
         GameObject acidClone = Instantiate(acidObject, acidObject.transform.position, player.transform.rotation);
         acidClone.SetActive(true);
-        energy -= 25;
+    }
+
+    void charge()
+    {
+        if (Time.time - lastShot < cooldown)
+        {
+            return;
+        }
+        lastShot = Time.time;
+
+        rb.AddForce(transform.up * chargeForce, ForceMode2D.Impulse);
+    }
+
+    void shield(bool active)
+    {
+        shieldObject.SetActive(active);
+    }
+
+    void decoy()
+    {
+        if (Time.time - lastShot < cooldown)
+        {
+            return;
+        }
+        lastShot = Time.time;
+
+        GameObject decoyClone = Instantiate(decoyObject, acidObject.transform.position, player.transform.rotation);
+        decoyObject.SetActive(true);
+    }
+
+    void minion()
+    {
+        if (Time.time - lastShot < cooldown)
+        {
+            return;
+        }
+        lastShot = Time.time;
+
+        GameObject minionClone = Instantiate(minionObject, acidObject.transform.position, player.transform.rotation);
+        minionObject.SetActive(true);
     }
 }
