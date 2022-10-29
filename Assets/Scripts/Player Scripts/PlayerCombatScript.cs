@@ -11,6 +11,7 @@ public class PlayerCombatScript : MonoBehaviour
     public GameObject meleeAttackPoint;
     public GameObject dagger;
     public GameObject firebreathObject;
+    public GameObject acidObject;
 
     public LayerMask enemyLayers;
 
@@ -56,11 +57,21 @@ public class PlayerCombatScript : MonoBehaviour
                     firebreath(false);
                 }
             }
+
+            if (currentPower == "acid")
+            {
+                if (Input.GetKeyDown("q"))
+                {
+                    acid();
+                }
+            }
         }
         else
         {
             firebreath(false);
         }
+
+        
     }
 
     void meleeAttack()
@@ -75,7 +86,8 @@ public class PlayerCombatScript : MonoBehaviour
 
     void rangedAttack()
     {
-        GameObject daggerClone = Instantiate(dagger, new Vector3(player.transform.position.x, player.transform.position.y + 1, player.transform.position.z), Quaternion.identity);
+        GameObject daggerClone = Instantiate(dagger, dagger.transform.position, player.transform.rotation);
+        daggerClone.SetActive(true);
     }
 
     void OnDrawGizmosSelected()
@@ -90,10 +102,23 @@ public class PlayerCombatScript : MonoBehaviour
             currentPower = "firebreath";
             energy = 100;
         }
+
+        if (Input.GetKeyDown("2"))
+        {
+            currentPower = "acid";
+            energy = 100;
+        }
     }
 
     void firebreath(bool active)
     {
         firebreathObject.SetActive(active);
+    }
+
+    void acid()
+    {
+        GameObject acidClone = Instantiate(acidObject, acidObject.transform.position, player.transform.rotation);
+        acidClone.SetActive(true);
+        energy -= 25;
     }
 }
